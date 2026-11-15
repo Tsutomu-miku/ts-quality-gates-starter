@@ -2,12 +2,14 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { ESLint } from "eslint";
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+const { architecture } = JSON.parse(readFileSync("template.json", "utf8"));
 
 const eslint = new ESLint();
 const lint = async (code, filePath = "src/evaluation.ts") =>
   (await eslint.lintText(code, { filePath }))[0];
 
-test("platform reads and runtime imports are confined to one boundary", async () => {
+test("platform reads remain blocked; only a selected runtime boundary is exempt", async () => {
   for (const code of [
     "process.platform",
     "process['platform']",
@@ -17,8 +19,8 @@ test("platform reads and runtime imports are confined to one boundary", async ()
   ]) {
     assert.ok((await lint(code)).errorCount > 0);
     assert.equal(
-      (await lint(code, "src/infra/platform-boundary.ts")).errorCount,
-      0,
+      (await lint(code, "src/infra/platform-boundary.ts")).errorCount === 0,
+      architecture === "layered",
     );
   }
 });

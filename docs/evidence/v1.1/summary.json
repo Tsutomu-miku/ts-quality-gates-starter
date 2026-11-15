@@ -1,0 +1,481 @@
+{
+  "templateVersion": "1.1.0-dev",
+  "node": "v22.17.0",
+  "registry": "https://registry.npmjs.org/",
+  "freshCachePerProfile": true,
+  "artifacts": {
+    "ts-library": {
+      "architecture": "flat",
+      "files": [
+        ".githooks/pre-push",
+        ".github/workflows/quality.yml",
+        ".gitignore",
+        ".npmrc",
+        ".nvmrc",
+        ".prettierignore",
+        "AGENTS.md",
+        "LICENSE",
+        "NOTICE",
+        "README.md",
+        "dependency-cruiser.cjs",
+        "eslint.config.mjs",
+        "package-lock.json",
+        "package.json",
+        "quality/eval-probes.mjs",
+        "src/index.ts",
+        "template.json",
+        "test/dependency-policy.test.mjs",
+        "test/gate-config.test.mjs",
+        "test/policy-rules.test.mjs",
+        "tools/dependency-fixture.mjs",
+        "tools/dependency-policy.cjs",
+        "tools/install-hooks.mjs",
+        "tools/policy-rules.mjs",
+        "tools/run-evals.mjs",
+        "tsconfig.json"
+      ]
+    },
+    "web": {
+      "architecture": "flat",
+      "files": [
+        ".githooks/pre-push",
+        ".github/workflows/quality.yml",
+        ".gitignore",
+        ".npmrc",
+        ".nvmrc",
+        ".prettierignore",
+        "AGENTS.md",
+        "LICENSE",
+        "NOTICE",
+        "README.md",
+        "dependency-cruiser.cjs",
+        "eslint.config.mjs",
+        "index.html",
+        "package-lock.json",
+        "package.json",
+        "quality/eval-probes.mjs",
+        "src/index.ts",
+        "template.json",
+        "test/dependency-policy.test.mjs",
+        "test/gate-config.test.mjs",
+        "test/policy-rules.test.mjs",
+        "tools/dependency-fixture.mjs",
+        "tools/dependency-policy.cjs",
+        "tools/install-hooks.mjs",
+        "tools/policy-rules.mjs",
+        "tools/run-evals.mjs",
+        "tsconfig.json"
+      ]
+    },
+    "node-cli": {
+      "architecture": "layered",
+      "files": [
+        ".githooks/pre-push",
+        ".github/workflows/quality.yml",
+        ".gitignore",
+        ".npmrc",
+        ".nvmrc",
+        ".prettierignore",
+        "AGENTS.md",
+        "LICENSE",
+        "NOTICE",
+        "README.md",
+        "dependency-cruiser.cjs",
+        "eslint.config.mjs",
+        "package-lock.json",
+        "package.json",
+        "quality/eval-probes.mjs",
+        "src/adapters/index.ts",
+        "src/domain/index.ts",
+        "src/entrypoints/cli.ts",
+        "src/index.ts",
+        "src/infra/index.ts",
+        "src/session/index.ts",
+        "src/transport/index.ts",
+        "template.json",
+        "test/dependency-policy.test.mjs",
+        "test/gate-config.test.mjs",
+        "test/policy-rules.test.mjs",
+        "tools/dependency-fixture.mjs",
+        "tools/dependency-policy.cjs",
+        "tools/install-hooks.mjs",
+        "tools/policy-rules.mjs",
+        "tools/run-evals.mjs",
+        "tsconfig.json"
+      ]
+    },
+    "mcp-service": {
+      "architecture": "layered",
+      "files": [
+        ".githooks/pre-push",
+        ".github/workflows/quality.yml",
+        ".gitignore",
+        ".npmrc",
+        ".nvmrc",
+        ".prettierignore",
+        "AGENTS.md",
+        "LICENSE",
+        "NOTICE",
+        "README.md",
+        "dependency-cruiser.cjs",
+        "eslint.config.mjs",
+        "package-lock.json",
+        "package.json",
+        "quality/eval-probes.mjs",
+        "src/adapters/index.ts",
+        "src/domain/index.ts",
+        "src/entrypoints/main.ts",
+        "src/index.ts",
+        "src/infra/index.ts",
+        "src/session/index.ts",
+        "src/transport/index.ts",
+        "template.json",
+        "test/dependency-policy.test.mjs",
+        "test/gate-config.test.mjs",
+        "test/policy-rules.test.mjs",
+        "tools/dependency-fixture.mjs",
+        "tools/dependency-policy.cjs",
+        "tools/install-hooks.mjs",
+        "tools/policy-rules.mjs",
+        "tools/run-evals.mjs",
+        "tsconfig.json"
+      ]
+    }
+  },
+  "results": [
+    {
+      "id": "ts-library-bootstrap-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/ts-library-npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "ts-library-instantiate",
+      "command": [
+        "node",
+        "tools/instantiate.mjs",
+        "--name",
+        "quality-probe",
+        "--type",
+        "ts-library"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "ts-library-npm-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/ts-library-npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "ts-library-initial-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "ts-library-git-init",
+      "command": ["git", "init", "--initial-branch=main"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "ts-library-install-hooks",
+      "command": ["npm", "run", "hooks:install"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "hook-path",
+      "command": ["git", "config", "--get", "core.hooksPath"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "hook-green",
+      "command": ["node", ".githooks/pre-push"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "ts-library-empty-catch",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "hook-rejects",
+      "command": ["node", ".githooks/pre-push"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "ts-library-over-300-lines",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "ts-library-source-test-boundary",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "ts-library-restored-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "web-bootstrap-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/web-npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "web-instantiate",
+      "command": [
+        "node",
+        "tools/instantiate.mjs",
+        "--name",
+        "quality-probe",
+        "--type",
+        "web"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "web-npm-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/web-npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "web-initial-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "web-git-init",
+      "command": ["git", "init", "--initial-branch=main"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "web-install-hooks",
+      "command": ["npm", "run", "hooks:install"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "web-empty-catch",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "web-over-300-lines",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "web-source-test-boundary",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "web-restored-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "node-cli-bootstrap-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/node-cli-npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "node-cli-instantiate",
+      "command": [
+        "node",
+        "tools/instantiate.mjs",
+        "--name",
+        "quality-probe",
+        "--type",
+        "node-cli"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "node-cli-npm-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/node-cli-npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "node-cli-initial-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "node-cli-git-init",
+      "command": ["git", "init", "--initial-branch=main"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "node-cli-install-hooks",
+      "command": ["npm", "run", "hooks:install"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "node-cli-empty-catch",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "node-cli-over-300-lines",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "node-cli-domain-io",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "node-cli-restored-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "mcp-service-bootstrap-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/mcp-service-npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "mcp-service-instantiate",
+      "command": [
+        "node",
+        "tools/instantiate.mjs",
+        "--name",
+        "quality-probe",
+        "--type",
+        "mcp-service"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "mcp-service-npm-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/mcp-service-npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "mcp-service-initial-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "mcp-service-git-init",
+      "command": ["git", "init", "--initial-branch=main"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "mcp-service-install-hooks",
+      "command": ["npm", "run", "hooks:install"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "mcp-service-empty-catch",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "mcp-service-over-300-lines",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "mcp-service-domain-io",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "mcp-service-restored-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    }
+  ]
+}

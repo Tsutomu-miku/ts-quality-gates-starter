@@ -1,55 +1,50 @@
 # Gate contract
 
-The rules live in root `AGENTS.md`, `eslint.config.mjs`, `dependency-cruiser.cjs`
-and `tools/policy-rules.mjs`. The bootstrap skill only selects, trims and explains
-them. Keep modifications to rules and their paired probes together.
+Rules live in generated AGENTS, `eslint.config.mjs`, `tools/policy-rules.mjs` and
+`tools/dependency-policy.cjs`. The dependency root configuration explicitly selects
+flat or layered architecture during initialization. The bootstrap skill does not
+copy the rule text into its instructions.
 
-## Machine enforcement
+## Universal gates
 
-- Production TS/TSX: empty catches (including comments), empty Promise handlers,
-  and unconditional empty catch results (`undefined`, `null`, `{}`, `[]`, bare
-  return) fail. An explicit throw in the handler permits known-error handling.
-- A documented optional-file `ENOENT` branch returning `undefined`, followed by
-  `throw error` for everything else, passes. Nested callback throws do not count.
-- The policy is deliberately syntactic: a throw on an unrelated branch may pass;
-  a log-and-success path, variable handler, custom thenable or invented nonempty
-  default may escape it. Verify actual control flow and contract in review.
-- Direct `process.platform`, computed literal access, destructuring and runtime
-  imports from `os`/`process` fail outside `src/infra/platform-boundary.ts`. Alias
-  chains and dynamic access need review. The boundary exemption does not disable
-  catch or size rules. Add the file only when a real runtime difference exists.
-- Every physical TS/TSX source line counts toward 300. Lint warns and exits 1
-  because its warning budget is zero. There are no legacy-size exemptions.
-- Dependency-cruiser rejects cycles, unresolved imports, domain → anything
-  outside domain, session → anything outside domain/session, production →
-  tests/examples/fixtures, inward composition imports and runtime dev tools.
+Every profile keeps strict TS, build, empty/comment-only catch rejection, empty
+Promise-handler rejection, unconditional empty catch-result rejection, and the
+300-physical-line warning with zero warning budget. A known ENOENT branch returning
+undefined and rethrowing everything else passes. No platform/version alternate
+implementation is permitted just because the project is flat.
 
-## Layer presets
+Platform reads/imports are rejected in business source. Only a selected layered
+runtime (or a real infra directory) admits the reviewed exact discovery file;
+flat AGENTS does not prescribe creating that boundary. Its exception never
+turns off catch or size rules.
 
-Domain is always pure. Session owns its consumed port types; adapters implement
-those types. Entry points create concrete implementations. Transport validates
-external inputs and receives capabilities. Infra supplies low-level runtime
-operations. See the canonical `note` flow under `src/`.
+## Dependency tiers
 
-Library/Web profiles trim Node I/O examples; unused layer rules remain dormant
-and still protect a future layer added at those paths. MCP/CLI keep Node layers.
-To rename or flatten layers, edit the paths in `dependency-cruiser.cjs` and the
-corresponding fixtures together. Test the real alias/tsconfig layout too. Do not
-delete a failing rule because a layer has a different name.
+Four base rules always apply: `no-cycles`, `no-unresolved`,
+`production-not-tests`, `no-dev-dependency-in-production`. These enforce source
+boundaries without inventing application layers. Type-only dev dependencies are
+allowed; production/test fixture imports, including type-only imports, are not.
 
-## Review enforcement
+A layered selection activates the six architectural constraints. For a flat
+selection, `activeLayers` reads real source directories and selects only matching
+outgoing rules. No recognized directories means **exactly the four base rules**.
+Domain remains pure, session consumes domain and its own ports, infra cannot
+orchestrate, adapters do not call transport, transport does not compose I/O,
+and inward composition imports are forbidden when that boundary exists.
+Custom aliases/names still require explicit mapping and regression fixtures.
 
-Single responsibility, absence semantics, one lifecycle/one owner, fabricated
-success and unnecessary compatibility paths require independent review. The
-paired deterministic evals include a semantic-only ownership example explicitly;
-they are not model evaluations or a proof of production correctness.
+The canonical example is outside production under examples and is excluded from
+all generated applications. Read [profiles](profiles.md) before adding layers.
 
-This template abstracts generic MIT tooling from
-[`cdp-browser-mcp@da1f984`](https://github.com/Tsutomu-miku/cdp-browser-mcp/commit/da1f984fd04f3c2e615f53eb7104973442bc96f3).
-The provenance is limited to the generic rules, fixture pattern, hook and test
-approach. Browser protocol policy, runtime, matrices and legacy debt are absent.
+## Limits and review
 
-ESLint's [`max-lines`](https://eslint.org/docs/latest/rules/max-lines) counts
-physical lines according to its configured options; its
-[`--max-warnings`](https://eslint.org/docs/latest/use/command-line-interface#--max-warnings)
-controls whether warnings fail the command. Both behaviors are tested here.
+Syntax gates do not prove all error control flow. A throw on an unrelated branch,
+a variable catch callback, log-and-success or fabricated nonempty result may
+escape detection. Aliased/dynamic platform reads and hidden imports need review.
+Cohesion, legitimate absence, one lifecycle/owner and the necessity of compatibility
+paths require real contract/behavior evidence. Paired evals are deterministic
+probes, not model success rates or application acceptance tests.
+
+Generic tooling derives from the public MIT
+[pilot](https://github.com/Tsutomu-miku/cdp-browser-mcp/commit/da1f984fd04f3c2e615f53eb7104973442bc96f3).
+Browser protocols, runtime, legacy exceptions and browser matrices are not included.

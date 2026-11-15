@@ -1,0 +1,24 @@
+{
+  "requestedGateVersions": {
+    "eslint": "10.15.0",
+    "typescript-eslint": "8.72.2",
+    "dependency-cruiser": "18.7.2"
+  },
+  "compatibleUpdate": "npm update --package-lock-only --ignore-scripts --registry=https://registry.npmjs.org",
+  "changedDependencyVersions": [],
+  "auditCounts": {
+    "info": 0,
+    "low": 0,
+    "moderate": 7,
+    "high": 0,
+    "critical": 0,
+    "total": 7
+  },
+  "parserMinimatchRange": "^10.2.2",
+  "lockedMinimatch": "10.2.6",
+  "advisory": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
+  "patchedFrom": "11.0.1",
+  "decision": "Retain validated direct versions; a forced major override falls outside the parser dependency contract and requires separate compatibility validation.",
+  "parserMinimatchLocation": "node_modules/@typescript-eslint/typescript-estree/node_modules/minimatch",
+  "eslintMinimatchVersion": "11.0.8"
+}

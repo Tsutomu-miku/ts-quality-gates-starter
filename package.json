@@ -1,6 +1,6 @@
 {
   "name": "ts-quality-gates-starter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "A small, strict TypeScript starter with executable quality gates",
   "type": "module",
@@ -21,7 +21,8 @@
     "hooks:install": "node tools/install-hooks.mjs",
     "instantiate": "node tools/instantiate.mjs",
     "verify:template": "node tools/verify-template.mjs",
-    "check": "npm run build && npm run typecheck && npm run lint && npm run depcruise && npm run test:quality && npm run evals && npm run format:check"
+    "check": "npm run build && npm run typecheck && npm run lint && npm run depcruise && npm run test:quality && npm run test:profiles && npm run evals && npm run format:check",
+    "test:profiles": "node --test test/profiles.test.mjs"
   },
   "devDependencies": {
     "@types/node": "22.20.5",

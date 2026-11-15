@@ -30,15 +30,15 @@ export default [
   },
   {
     id: "domain-direction",
-    bad: "export const note = 'I/O must stay outside domain';",
+    bad: "export const value = 'I/O must stay outside domain';",
     good: "export const format = (text: string) => text.trim();",
     rules: [],
     badDependencies: {
-      "src/domain/note.ts":
+      "src/domain/value.ts":
         "import { readFile } from 'node:fs/promises'; export { readFile };",
     },
     goodDependencies: {
-      "src/domain/note.ts":
+      "src/domain/value.ts":
         "export const format = (text: string) => text.trim();",
     },
     dependencyRule: "domain-is-pure",

@@ -5,14 +5,48 @@ import { checkDependencies as check } from "../tools/dependency-fixture.mjs";
 async function rejected(files, rule) {
   const result = await check(files);
   assert.equal(result.status, 1, result.stdout + result.stderr);
-  assert.ok((result.stdout + result.stderr).includes(rule), rule);
+  assert.ok(
+    (result.stdout + result.stderr).includes(rule),
+    rule + result.stdout + result.stderr,
+  );
 }
+
+test("flat production code cannot import a test type fixture", async () => {
+  await rejected(
+    {
+      "test/fixture.d.ts": "export declare const fixture: number;",
+      "src/index.ts":
+        "import type { fixture } from '../test/fixture.d.ts'; export type Value = typeof fixture;",
+    },
+    "production-not-tests",
+  );
+});
+
+test("runtime dev dependencies fail the base gate", async () => {
+  await rejected(
+    {
+      "package.json": JSON.stringify({
+        name: "fixture",
+        type: "module",
+        devDependencies: { tester: "1.0.0" },
+      }),
+      "node_modules/tester/package.json": JSON.stringify({
+        name: "tester",
+        version: "1.0.0",
+        main: "index.js",
+      }),
+      "node_modules/tester/index.js": "exports.value = 1;",
+      "src/index.ts": "import { value } from 'tester'; export { value };",
+    },
+    "no-dev-dependency-in-production",
+  );
+});
 
 test("session consumes domain and its own port", async () => {
   const result = await check({
-    "src/domain/note.ts": "export const note = 'text';",
+    "src/domain/value.ts": "export const value = 'text';",
     "src/session/save.ts":
-      "import { note } from '../domain/note.js'; export { note };",
+      "import { value } from '../domain/value.js'; export { value };",
   });
   assert.equal(result.status, 0, result.stdout + result.stderr);
 });
@@ -20,7 +54,7 @@ test("session consumes domain and its own port", async () => {
 test("domain cannot import built-in I/O", async () => {
   await rejected(
     {
-      "src/domain/note.ts":
+      "src/domain/value.ts":
         "import { readFile } from 'node:fs/promises'; export { readFile };",
     },
     "domain-is-pure",
