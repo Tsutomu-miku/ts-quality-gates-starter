@@ -1,8 +1,8 @@
 # ts-quality-gates-starter
 
 A public MIT TypeScript template with executable quality gates and profile-shaped
-application output. **v1.1.0-dev is a review candidate on this branch, not a release.**
-The existing `v1.0.0` tag remains unchanged.
+application output. **v1.1.0 is released and is the latest stable version.**
+The previous release is `v1.0.0`; its tag remains unchanged.
 
 Use Node 22.13+ on 22.x, 24.x, or 26+, npm, Git, and public GitHub/npm access.
 No Chrome, credentials, internal services or global packages are needed.
@@ -12,11 +12,11 @@ and dependency-cruiser **18.7.2**. The lockfile uses public npm only.
 ## Instantiate a fresh project
 
 GitHub **Use this template** or `gh repo create --template` copies the selected
-published template revision. To evaluate this candidate, clone its branch/commit
-explicitly instead of silently using the stable release:
+published template revision. To use the latest stable release, clone its tag
+explicitly:
 
 ```console
-git clone --depth 1 --branch feat/profile-aware-v1.1 https://github.com/Tsutomu-miku/ts-quality-gates-starter.git my-project
+git clone --depth 1 --branch v1.1.0 https://github.com/Tsutomu-miku/ts-quality-gates-starter.git my-project
 cd my-project
 npm ci --registry=https://registry.npmjs.org
 node tools/instantiate.mjs --name my-project --type ts-library
@@ -27,10 +27,10 @@ npm run hooks:install
 npm run check
 ```
 
-`npx degit Tsutomu-miku/ts-quality-gates-starter#feat/profile-aware-v1.1 my-project`
+`npx degit Tsutomu-miku/ts-quality-gates-starter#v1.1.0 my-project`
 is another copy option. It executes third-party degit; this template is not an npm
 package and is not npm-published. Initialize Git before installing hooks.
-For a reviewed release, pin its tag/commit and record that source in the project.
+Pin the release tag/commit and record that source in the project.
 
 The one-time initializer requires the installed pinned formatter. It validates
 name/type, replaces the template-owned source with the selected empty skeleton,
@@ -89,8 +89,9 @@ outside that range. A forced major override or different validated gate version
 would need a separate compatibility decision; neither was applied. Check success
 is not a clean security audit. [Audit evidence](docs/evidence/v1.1/audit-assessment.json).
 
-The published project-bootstrap skill remains pinned to stable v1.0.0 while this
-candidate awaits review. No new tag, merge, skill binding change or npm publication
-is part of this candidate. Upgrade an existing project by reviewing rule/tool/test
+The repository's project-bootstrap skill is pinned to stable v1.1.0. Synchronize
+installed copies to this version when adopting the release. Version management
+uses Git tags; the template is not npm-published. Upgrade an existing project by
+reviewing rule/tool/test
 changes and rerunning positive and negative probes, never by copying over its code.
 See [LICENSE](LICENSE) and [NOTICE](NOTICE).
