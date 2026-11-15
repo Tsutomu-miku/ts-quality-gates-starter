@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/Tsutomu-miku/ts-quality-gates-starter",
+  "version": "1.0.0",
+  "profile": "canonical",
+  "projectName": "{{PROJECT_NAME}}"
+}

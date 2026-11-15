@@ -1,0 +1,5 @@
+
+> quality-probe@0.1.0 hooks:install
+> node tools/install-hooks.mjs
+
+Installed pre-push check for this checkout.

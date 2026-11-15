@@ -1,0 +1,11 @@
+ts-quality-gates-starter
+Copyright (c) 2026 Tsutomu
+Licensed under the MIT License; see LICENSE.
+
+The generic quality-gate implementation is derived from the public MIT project
+cdp-browser-mcp, Copyright (c) 2026 Tsutomu, at commit
+da1f984fd04f3c2e615f53eb7104973442bc96f3:
+https://github.com/Tsutomu-miku/cdp-browser-mcp
+
+This starter does not include that project's browser runtime or dependencies.
+Installed development dependencies retain their own licenses and notices.

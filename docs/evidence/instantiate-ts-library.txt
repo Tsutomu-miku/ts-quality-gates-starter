@@ -1,0 +1,2 @@
+Instantiated quality-probe (ts-library); template 1.0.0.
+Run npm ci, npm run hooks:install, then npm run check.

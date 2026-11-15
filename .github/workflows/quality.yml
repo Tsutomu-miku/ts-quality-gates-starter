@@ -1,0 +1,36 @@
+name: Quality gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm ci --registry=https://registry.npmjs.org
+      - run: npm run check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-evals
+          path: test-results/
+          if-no-files-found: warn
+          retention-days: 7
+
+  # Browser matrix is disabled: this template has no browser runtime or SDK.
+  # For a browser project, add an explicit browser-test job after check, install
+  # its chosen browser, and run its real suite on the supported OS/mode matrix.
+  # Do not treat an empty or skipped browser job as acceptance evidence.

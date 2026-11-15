@@ -1,0 +1,275 @@
+
+> quality-probe@0.1.0 check
+> npm run build && npm run typecheck && npm run lint && npm run depcruise && npm run test:quality && npm run evals && npm run format:check
+
+
+> quality-probe@0.1.0 build
+> tsc
+
+
+> quality-probe@0.1.0 typecheck
+> tsc --noEmit
+
+
+> quality-probe@0.1.0 lint
+> eslint src --max-warnings 0
+
+
+> quality-probe@0.1.0 depcruise
+> depcruise --config dependency-cruiser.cjs src --output-type err
+
+
+✔ no dependency violations found (8 modules, 9 dependencies cruised)
+
+
+> quality-probe@0.1.0 test:quality
+> node --test test/policy-rules.test.mjs test/dependency-policy.test.mjs test/gate-config.test.mjs
+
+TAP version 13
+# Subtest: session consumes domain and its own port
+ok 1 - session consumes domain and its own port
+  ---
+  duration_ms: 342.54725
+  type: 'test'
+  ...
+# Subtest: domain cannot import built-in I/O
+ok 2 - domain cannot import built-in I/O
+  ---
+  duration_ms: 334.696167
+  type: 'test'
+  ...
+# Subtest: session cannot import adapter values or types
+ok 3 - session cannot import adapter values or types
+  ---
+  duration_ms: 623.732791
+  type: 'test'
+  ...
+# Subtest: session cannot own concrete filesystem I/O
+ok 4 - session cannot own concrete filesystem I/O
+  ---
+  duration_ms: 307.396917
+  type: 'test'
+  ...
+# Subtest: production cannot consume fixtures
+ok 5 - production cannot consume fixtures
+  ---
+  duration_ms: 309.549416
+  type: 'test'
+  ...
+# Subtest: cycles and unresolved imports fail
+ok 6 - cycles and unresolved imports fail
+  ---
+  duration_ms: 612.499708
+  type: 'test'
+  ...
+# Subtest: transport and infra cannot perform adapter composition
+ok 7 - transport and infra cannot perform adapter composition
+  ---
+  duration_ms: 629.352667
+  type: 'test'
+  ...
+# Subtest: entrypoint composes adapters without inward dependencies
+ok 8 - entrypoint composes adapters without inward dependencies
+  ---
+  duration_ms: 643.567125
+  type: 'test'
+  ...
+# Subtest: platform reads and runtime imports are confined to one boundary
+ok 9 - platform reads and runtime imports are confined to one boundary
+  ---
+  duration_ms: 230.7335
+  type: 'test'
+  ...
+# Subtest: 300 physical lines pass, 301 warn, and the real lint CLI rejects warnings
+ok 10 - 300 physical lines pass, 301 warn, and the real lint CLI rejects warnings
+  ---
+  duration_ms: 305.277125
+  type: 'test'
+  ...
+# Subtest: empty and comment-only catches fail; inline disables do not bypass policy
+ok 11 - empty and comment-only catches fail; inline disables do not bypass policy
+  ---
+  duration_ms: 5.403167
+  type: 'test'
+  ...
+# Subtest: known optional absence with rethrow is legal; arbitrary empty result fails
+ok 12 - known optional absence with rethrow is legal; arbitrary empty result fails
+  ---
+  duration_ms: 2.456583
+  type: 'test'
+  ...
+# Subtest: no-silent-catch
+    # Subtest: valid
+        # Subtest: try { task() } catch (e) { throw e }
+        ok 1 - try { task() } catch (e) { throw e }
+          ---
+          duration_ms: 39.394792
+          type: 'test'
+          ...
+        # Subtest: function readOptional() { try { task() } catch (e) { if (e.code !== 'ENOENT') throw e; return undefined } }
+        ok 2 - function readOptional() { try { task() } catch (e) { if (e.code !== 'ENOENT') throw e; return undefined } }
+          ---
+          duration_ms: 2.075375
+          type: 'test'
+          ...
+        # Subtest: task().catch(e => { report(e); process.exitCode = 1 })
+        ok 3 - task().catch(e => { report(e); process.exitCode = 1 })
+          ---
+          duration_ms: 1.446417
+          type: 'test'
+          ...
+        1..3
+    ok 1 - valid
+      ---
+      duration_ms: 43.200417
+      type: 'suite'
+      ...
+    # Subtest: invalid
+        # Subtest: try { task() } catch {}
+        ok 1 - try { task() } catch {}
+          ---
+          duration_ms: 1.527875
+          type: 'test'
+          ...
+        # Subtest: try { task() } catch { /* intentionally ignored */ }
+        ok 2 - try { task() } catch { /* intentionally ignored */ }
+          ---
+          duration_ms: 1.228834
+          type: 'test'
+          ...
+        # Subtest: task().catch(() => {})
+        ok 3 - task().catch(() => {})
+          ---
+          duration_ms: 0.885375
+          type: 'test'
+          ...
+        # Subtest: task()['catch'](function () { /* ignored */ })
+        ok 4 - task()['catch'](function () { /* ignored */ })
+          ---
+          duration_ms: 1.832334
+          type: 'test'
+          ...
+        1..4
+    ok 2 - invalid
+      ---
+      duration_ms: 5.789917
+      type: 'suite'
+      ...
+    1..2
+ok 13 - no-silent-catch
+  ---
+  duration_ms: 49.221917
+  type: 'suite'
+  ...
+# Subtest: no-empty-fallback
+    # Subtest: valid
+        # Subtest: function readOptional() { try { return read() } catch(e) { if(e.code !== 'ENOENT') throw e; return undefined } }
+        ok 1 - function readOptional() { try { return read() } catch(e) { if(e.code !== 'ENOENT') throw e; return undefined } }
+          ---
+          duration_ms: 1.0745
+          type: 'test'
+          ...
+        # Subtest: function readOptional() { try { return read() } catch(e) { if(e.code === 'ENOENT') return undefined; throw e } }
+        ok 2 - function readOptional() { try { return read() } catch(e) { if(e.code === 'ENOENT') return undefined; throw e } }
+          ---
+          duration_ms: 2.076
+          type: 'test'
+          ...
+        # Subtest: read().catch(e => { if(e.code !== 'ENOENT') throw e; return undefined })
+        ok 3 - read().catch(e => { if(e.code !== 'ENOENT') throw e; return undefined })
+          ---
+          duration_ms: 0.92775
+          type: 'test'
+          ...
+        # Subtest: read().catch(e => ({ error: String(e) }))
+        ok 4 - read().catch(e => ({ error: String(e) }))
+          ---
+          duration_ms: 0.855583
+          type: 'test'
+          ...
+        1..4
+    ok 1 - valid
+      ---
+      duration_ms: 5.064292
+      type: 'suite'
+      ...
+    # Subtest: invalid
+        # Subtest: function read() { try { task() } catch { return {} } }
+        ok 1 - function read() { try { task() } catch { return {} } }
+          ---
+          duration_ms: 0.787375
+          type: 'test'
+          ...
+        # Subtest: function read() { try { task() } catch { return [] } }
+        ok 2 - function read() { try { task() } catch { return [] } }
+          ---
+          duration_ms: 0.660666
+          type: 'test'
+          ...
+        # Subtest: function read() { try { task() } catch { return } }
+        ok 3 - function read() { try { task() } catch { return } }
+          ---
+          duration_ms: 0.662042
+          type: 'test'
+          ...
+        # Subtest: task().catch(() => undefined)
+        ok 4 - task().catch(() => undefined)
+          ---
+          duration_ms: 0.443917
+          type: 'test'
+          ...
+        # Subtest: task().catch(() => null)
+        ok 5 - task().catch(() => null)
+          ---
+          duration_ms: 0.577166
+          type: 'test'
+          ...
+        # Subtest: task().catch(() => ({}))
+        ok 6 - task().catch(() => ({}))
+          ---
+          duration_ms: 0.479208
+          type: 'test'
+          ...
+        # Subtest: function read() { try { task() } catch { const later = () => { throw Error() }; return {} } }
+        ok 7 - function read() { try { task() } catch { const later = () => { throw Error() }; return {} } }
+          ---
+          duration_ms: 0.911667
+          type: 'test'
+          ...
+        1..7
+    ok 2 - invalid
+      ---
+      duration_ms: 4.612417
+      type: 'suite'
+      ...
+    1..2
+ok 14 - no-empty-fallback
+  ---
+  duration_ms: 9.798958
+  type: 'suite'
+  ...
+1..14
+# tests 30
+# suites 6
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3842.294125
+
+> quality-probe@0.1.0 evals
+> node tools/run-evals.mjs
+
+empty-catch: policy/no-silent-catch; legal probe accepted
+optional-file: policy/no-empty-fallback; legal probe accepted
+physical-size: max-lines; legal probe accepted
+platform-boundary: no-restricted-syntax; legal probe accepted
+domain-direction: domain-is-pure; legal probe accepted
+single-owner: semantic review required; legal probe accepted
+
+> quality-probe@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!

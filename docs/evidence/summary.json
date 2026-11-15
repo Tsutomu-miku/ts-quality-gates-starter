@@ -1,0 +1,168 @@
+{
+  "templateVersion": "1.0.0",
+  "node": "v22.17.0",
+  "registry": "https://registry.npmjs.org/",
+  "freshCache": true,
+  "results": [
+    {
+      "id": "bootstrap-npm-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/bootstrap-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "instantiate",
+      "command": [
+        "node",
+        "tools/instantiate.mjs",
+        "--name",
+        "quality-probe",
+        "--type",
+        "node-cli"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "npm-ci",
+      "command": [
+        "npm",
+        "ci",
+        "--registry=https://registry.npmjs.org",
+        "--cache",
+        "<sandbox>/npm-cache"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "initial-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "git-init",
+      "command": ["git", "init", "--initial-branch=main"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "install-hooks",
+      "command": ["npm", "run", "hooks:install"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "hook-path",
+      "command": ["git", "config", "--get", "core.hooksPath"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "hook-green",
+      "command": ["node", ".githooks/pre-push"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "harden-readonly-audit",
+      "command": ["node", "tools/audit-project.mjs", "<sandbox>/audit-target"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "empty-catch",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "hook-rejects",
+      "command": ["node", ".githooks/pre-push"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "over-300-lines",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "domain-io",
+      "command": ["npm", "run", "check"],
+      "expected": 1,
+      "exit": 1
+    },
+    {
+      "id": "restored-green",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "instantiate-ts-library",
+      "command": [
+        "node",
+        "tools/instantiate.mjs",
+        "--name",
+        "quality-probe",
+        "--type",
+        "ts-library"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "check-ts-library",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "instantiate-mcp-service",
+      "command": [
+        "node",
+        "tools/instantiate.mjs",
+        "--name",
+        "quality-probe",
+        "--type",
+        "mcp-service"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "check-mcp-service",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "instantiate-web",
+      "command": [
+        "node",
+        "tools/instantiate.mjs",
+        "--name",
+        "quality-probe",
+        "--type",
+        "web"
+      ],
+      "expected": 0,
+      "exit": 0
+    },
+    {
+      "id": "check-web",
+      "command": ["npm", "run", "check"],
+      "expected": 0,
+      "exit": 0
+    }
+  ]
+}

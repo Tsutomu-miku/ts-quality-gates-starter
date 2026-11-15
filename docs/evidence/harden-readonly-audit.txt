@@ -1,0 +1,48 @@
+{
+  "mode": "read-only audit; candidates require owner/alias review",
+  "inventory": {
+    "agents": [],
+    "eslint": [],
+    "dependencies": [],
+    "tsconfig": [],
+    "hooks": [],
+    "ci": []
+  },
+  "scannedFiles": 1,
+  "longFiles": [
+    {
+      "path": "src/domain/probe.ts",
+      "lines": 304
+    }
+  ],
+  "policyFindings": [
+    {
+      "path": "src/domain/probe.ts",
+      "rule": "policy/no-silent-catch",
+      "line": 2
+    },
+    {
+      "path": "src/domain/probe.ts",
+      "rule": "no-empty",
+      "line": 2
+    },
+    {
+      "path": "src/domain/probe.ts",
+      "rule": "no-restricted-syntax",
+      "line": 3
+    }
+  ],
+  "importCandidates": [
+    {
+      "path": "src/domain/probe.ts",
+      "imported": "node:fs/promises",
+      "from": "domain",
+      "to": "external-or-unmapped"
+    }
+  ],
+  "limits": [
+    "Only literal imports and canonical layer names are classified; aliases and custom owners require mapping.",
+    "Syntax gates do not prove lifecycle ownership, all swallowed errors, or compatibility semantics.",
+    "No target files, dependency installs, Git configuration, or hooks were changed."
+  ]
+}

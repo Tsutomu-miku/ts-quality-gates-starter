@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Bootstrap"
+  short_description: "初始化 TypeScript 项目质量门，或只读审计存量项目并分阶段加固"
+  default_prompt: "Use $project-bootstrap to initialize this TypeScript project or audit its quality gates."
