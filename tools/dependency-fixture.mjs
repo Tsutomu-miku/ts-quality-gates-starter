@@ -15,6 +15,11 @@ export async function checkDependencies(files) {
   const directory = await mkdtemp(join(tmpdir(), "policy-fixture-"));
   try {
     await copyFile(configuration, join(directory, "dependency-cruiser.cjs"));
+    await mkdir(join(directory, "tools"));
+    await copyFile(
+      new URL("./dependency-policy.cjs", import.meta.url),
+      join(directory, "tools/dependency-policy.cjs"),
+    );
     await writeFile(
       join(directory, "tsconfig.json"),
       JSON.stringify({

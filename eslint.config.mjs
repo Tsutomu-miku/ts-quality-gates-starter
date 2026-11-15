@@ -1,5 +1,16 @@
 import tseslint from "typescript-eslint";
 import policy from "./tools/policy-rules.mjs";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import dependencyPolicy from "./tools/dependency-policy.cjs";
+
+const root = new URL("./", import.meta.url);
+const { architecture } = JSON.parse(
+  readFileSync(new URL("template.json", root), "utf8"),
+);
+const platformBoundary = dependencyPolicy
+  .activeLayers({ root: fileURLToPath(root), architecture })
+  .includes("infra");
 
 const platformSelectors = [
   "MemberExpression[object.name='process'][property.name='platform']",
@@ -7,7 +18,7 @@ const platformSelectors = [
   "VariableDeclarator[init.name='process'] > ObjectPattern > Property[key.name='platform']",
 ].map((selector) => ({
   selector,
-  message: "Platform discovery belongs in src/infra/platform-boundary.ts.",
+  message: "Platform/version differences require a reviewed runtime boundary.",
 }));
 
 export default [
@@ -34,8 +45,7 @@ export default [
         {
           paths: ["node:os", "os", "node:process", "process"].map((name) => ({
             name,
-            message:
-              "Runtime platform imports belong in the platform boundary.",
+            message: "Runtime platform imports require a reviewed boundary.",
           })),
         },
       ],
@@ -46,8 +56,15 @@ export default [
       ],
     },
   },
-  {
-    files: ["src/infra/platform-boundary.ts"],
-    rules: { "no-restricted-syntax": "off", "no-restricted-imports": "off" },
-  },
+  ...(platformBoundary
+    ? [
+        {
+          files: ["src/infra/platform-boundary.ts"],
+          rules: {
+            "no-restricted-syntax": "off",
+            "no-restricted-imports": "off",
+          },
+        },
+      ]
+    : []),
 ];

@@ -12,7 +12,8 @@
     "declaration": true,
     "rootDir": "src",
     "outDir": "dist",
-    "types": ["node"]
+    "types": [],
+    "lib": ["ES2023"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

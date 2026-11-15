@@ -1,0 +1,22 @@
+
+> quality-probe@0.1.0 check
+> npm run build && npm run typecheck && npm run lint && npm run depcruise && npm run test:quality && npm run evals && npm run format:check
+
+
+> quality-probe@0.1.0 build
+> tsc
+
+
+> quality-probe@0.1.0 typecheck
+> tsc --noEmit
+
+
+> quality-probe@0.1.0 lint
+> eslint src --max-warnings 0
+
+
+<sandbox>/mcp-service/src/negative-probe.ts
+  4:5   error  Empty catch handlers hide failures; comments are not an error policy  policy/no-silent-catch
+  4:11  error  Empty block statement                                                 no-empty
+
+✖ 2 problems (2 errors, 0 warnings)

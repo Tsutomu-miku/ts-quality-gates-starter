@@ -1,0 +1,24 @@
+
+> quality-probe@0.1.0 check
+> npm run build && npm run typecheck && npm run lint && npm run depcruise && npm run test:quality && npm run evals && npm run format:check
+
+
+> quality-probe@0.1.0 build
+> tsc
+
+
+> quality-probe@0.1.0 typecheck
+> tsc --noEmit
+
+
+> quality-probe@0.1.0 lint
+> eslint src --max-warnings 0
+
+
+> quality-probe@0.1.0 depcruise
+> depcruise --config dependency-cruiser.cjs src --output-type err
+
+
+  error domain-is-pure: src/domain/negative-probe.ts → fs/promises
+
+x 1 dependency violations (1 errors, 0 warnings). 9 modules, 1 dependencies cruised.

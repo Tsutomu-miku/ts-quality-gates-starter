@@ -1,0 +1,70 @@
+{
+  "commonFiles": [
+    ".githooks/pre-push",
+    ".github/workflows/quality.yml",
+    ".gitignore",
+    ".npmrc",
+    ".nvmrc",
+    ".prettierignore",
+    "AGENTS.md",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "dependency-cruiser.cjs",
+    "eslint.config.mjs",
+    "package-lock.json",
+    "package.json",
+    "quality/eval-probes.mjs",
+    "src/index.ts",
+    "template.json",
+    "test/dependency-policy.test.mjs",
+    "test/gate-config.test.mjs",
+    "test/policy-rules.test.mjs",
+    "tools/dependency-fixture.mjs",
+    "tools/dependency-policy.cjs",
+    "tools/install-hooks.mjs",
+    "tools/policy-rules.mjs",
+    "tools/run-evals.mjs",
+    "tsconfig.json"
+  ],
+  "baseRules": [
+    "no-cycles",
+    "no-unresolved",
+    "production-not-tests",
+    "no-dev-dependency-in-production"
+  ],
+  "layerRules": [
+    "domain-is-pure",
+    "session-no-concrete-io",
+    "infra-does-not-orchestrate",
+    "adapters-do-not-call-transport",
+    "transport-does-not-wire-adapters",
+    "only-entrypoints-compose"
+  ],
+  "profiles": {
+    "ts-library": { "extraFiles": [], "architecture": "flat" },
+    "web": { "extraFiles": ["index.html"], "architecture": "flat" },
+    "node-cli": {
+      "architecture": "layered",
+      "extraFiles": [
+        "src/domain/index.ts",
+        "src/session/index.ts",
+        "src/infra/index.ts",
+        "src/adapters/index.ts",
+        "src/transport/index.ts",
+        "src/entrypoints/cli.ts"
+      ]
+    },
+    "mcp-service": {
+      "architecture": "layered",
+      "extraFiles": [
+        "src/domain/index.ts",
+        "src/session/index.ts",
+        "src/infra/index.ts",
+        "src/adapters/index.ts",
+        "src/transport/index.ts",
+        "src/entrypoints/main.ts"
+      ]
+    }
+  }
+}
