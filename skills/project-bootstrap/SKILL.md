@@ -7,7 +7,7 @@ description: 新项目初始化、TypeScript 代码质量门配置与存量项�
 
 这是初始化器和加固器。规则权威来源是公开 MIT 模板
 [ts-quality-gates-starter](https://github.com/Tsutomu-miku/ts-quality-gates-starter)，
-本技能对应 **v1.0.0**（模板根 `template.json` 的 version）。
+本技能对应 **v1.1.0**（模板根 `template.json` 的 version）。
 只拉起、裁剪、解释和协调采用；不要在技能中复制维护规则全文。
 
 前提：Node 22.13+（22.x）、24.x 或 26+，npm，Git，公网 GitHub/npm。
@@ -20,7 +20,7 @@ description: 新项目初始化、TypeScript 代码质量门配置与存量项�
 `web`、`node-cli`。若用户说中文类型，映射到这些参数。目录非空时改走 harden，
 不要覆盖应用或删除其 Git 历史。
 
-1. 从模板 **v1.0.0** tag 下载/clone 到临时目录，读取该版本 README、AGENTS
+1. 从模板 **v1.1.0** tag 下载/clone 到临时目录，读取该版本 README、AGENTS
    和 `docs/quality-gates.md`；核对 tag 的 commit 与 `template.json`。记录来源
    commit 供交付，不悄悄改用 main。下载失败时说明错误，不用旧缓存冒充最新。
 2. 将版本化模板文件（含点文件）复制到目标，排除模板 `.git`、依赖和构建产物。
@@ -41,7 +41,7 @@ description: 新项目初始化、TypeScript 代码质量门配置与存量项�
 
 ## harden <项目目录>
 
-先阅读模板 v1.0.0 的 [docs/harden.md](https://github.com/Tsutomu-miku/ts-quality-gates-starter/blob/v1.0.0/docs/harden.md)。
+先阅读模板 v1.1.0 的 [docs/harden.md](https://github.com/Tsutomu-miku/ts-quality-gates-starter/blob/v1.1.0/docs/harden.md)。
 用单独临时模板工具链安装依赖；**首次只读，不在目标装依赖、装 hook、改配置或重构**。
 
 1. 读取目标 AGENTS、package/lock、lint、依赖检查、tsconfig、hook 与 CI 配置，
@@ -62,4 +62,4 @@ description: 新项目初始化、TypeScript 代码质量门配置与存量项�
 模板是规则唯一维护处。升级时先比较已记录的模板版本/commit 与目标新 release，
 阅读变更，审查工具/配置/策略测试差异，协调项目本地定制，再验证正例和反例。
 更新项目来源记录以及本技能的对应版本；不要重新复制模板覆盖现存项目。
-未审阅新 release 时继续 pin v1.0.0，并准确说明该版本范围。
+未审阅新 release 时继续 pin v1.1.0，并准确说明该版本范围。
